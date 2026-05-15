@@ -1,0 +1,2185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yemiko Happy Nandatama — Data First.</title>
+<meta name="description" content="Project Coordinator, Social Researcher & Advocate. Turning citizen-generated data into policy that matters.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,300;1,9..144,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --bg2: #111111;
+  --bg3: #181818;
+  --text: #f0ebe0;
+  --text2: #a09880;
+  --teal: #00d4aa;
+  --amber: #f59e0b;
+  --red: #ff4d6d;
+  --border: rgba(240,235,224,0.08);
+  --mono: 'Space Mono', monospace;
+  --serif: 'Fraunces', Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; cursor: none; }
+* { cursor: none !important; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+/* Fallback for iframe/preview environments */
+@media (hover: none) {
+  .cursor, .cursor-ring { display: none; }
+}
+
+/* Custom cursor */
+.cursor {
+  width: 8px; height: 8px;
+  background: var(--teal);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  width: 32px; height: 32px;
+  border: 1px solid var(--teal);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease;
+  opacity: 0.5;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--teal); }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(8,8,8,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text2);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.nav-logo:hover { opacity: 1; color: var(--text); }
+
+/* Hero watermark */
+.hero-watermark {
+  position: absolute;
+  top: 50%;
+  right: -40px;
+  transform: translateY(-50%);
+  font-family: var(--serif);
+  font-size: clamp(160px, 22vw, 280px);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(240,235,224,0.04);
+  letter-spacing: -0.04em;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+.nav-links {
+  display: flex; gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--teal); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 48px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,212,170,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -100px; left: 30%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(245,158,11,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.2s ease forwards;
+}
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.35s ease forwards;
+}
+.hero-name span { color: var(--teal); }
+.hero-tagline {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(18px, 3vw, 28px);
+  color: var(--text2);
+  font-weight: 300;
+  max-width: 600px;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.5s ease forwards;
+}
+.hero-roles {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 56px;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.65s ease forwards;
+}
+.role-tag {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--text2);
+  text-transform: uppercase;
+}
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 48px;
+  width: fit-content;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.8s ease forwards;
+}
+.stat-num {
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--teal);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--text2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.hero-cta {
+  position: absolute;
+  bottom: 48px; right: 48px;
+  display: flex; gap: 16px;
+  opacity: 0;
+  animation: fadeUp 0.7s 1s ease forwards;
+}
+.btn {
+  padding: 12px 24px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: none;
+  transition: all 0.2s;
+  display: inline-block;
+}
+.btn-primary {
+  background: var(--teal);
+  color: var(--bg);
+  font-weight: 700;
+}
+.btn-primary:hover { background: #00b894; transform: translateY(-2px); }
+.btn-secondary {
+  border: 1px solid var(--border);
+  color: var(--text2);
+}
+.btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+
+/* SECTIONS */
+section {
+  padding: 100px 48px;
+  border-top: 1px solid var(--border);
+}
+.section-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 64px;
+}
+
+/* ABOUT */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.about-bio {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text2);
+}
+.about-bio strong { color: var(--text); font-weight: 600; }
+.about-bio p + p { margin-top: 20px; }
+.about-details { display: flex; flex-direction: column; gap: 32px; }
+.detail-item { border-left: 2px solid var(--teal); padding-left: 20px; }
+.detail-key {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.detail-val { font-size: 14px; color: var(--text); }
+.detail-val a { color: var(--teal); text-decoration: none; }
+
+/* SKILLS */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+}
+.skill-group {
+  background: var(--bg2);
+  padding: 32px;
+}
+.skill-group-title {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.skill-bar-wrap {
+  margin-bottom: 16px;
+}
+.skill-name {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+.skill-pct { color: var(--teal); }
+.skill-track {
+  height: 2px;
+  background: var(--border);
+  position: relative;
+  overflow: visible;
+}
+.skill-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--amber));
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+.skill-tags {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 16px;
+}
+.skill-tag {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  font-size: 10px;
+  color: var(--text2);
+  letter-spacing: 0.08em;
+}
+
+/* EXPERIENCE */
+.exp-list { display: flex; flex-direction: column; gap: 2px; }
+.exp-item {
+  background: var(--bg2);
+  padding: 32px 40px;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 40px;
+  transition: background 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.exp-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 0;
+  background: var(--teal);
+  transition: width 0.3s;
+}
+.exp-item:hover { background: var(--bg3); }
+.exp-item:hover::before { width: 3px; }
+.exp-date { font-size: 12px; color: var(--teal); padding-top: 4px; }
+.exp-org { font-size: 11px; color: var(--text2); margin-top: 4px; }
+.exp-loc { font-size: 10px; color: var(--text2); margin-top: 2px; opacity: 0.6; }
+.exp-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.exp-desc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.7;
+}
+.exp-bullets {
+  margin-top: 12px;
+  list-style: none;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.exp-bullets li {
+  font-size: 12px;
+  color: var(--text2);
+  padding-left: 16px;
+  position: relative;
+}
+.exp-bullets li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+}
+.exp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.exp-tag {
+  padding: 3px 8px;
+  background: rgba(0,212,170,0.08);
+  border: 1px solid rgba(0,212,170,0.2);
+  font-size: 10px;
+  color: var(--teal);
+  letter-spacing: 0.08em;
+}
+
+/* PROJECTS */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.project-card {
+  background: var(--bg2);
+  padding: 32px;
+  transition: background 0.2s;
+  display: flex; flex-direction: column;
+}
+.project-card:hover { background: var(--bg3); }
+.project-icon {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+.project-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.project-desc {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.7;
+  flex: 1;
+}
+.project-meta {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.project-year { font-size: 11px; color: var(--text2); }
+.project-link {
+  font-size: 11px;
+  color: var(--teal);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+}
+.project-link:hover { text-decoration: underline; }
+
+/* PUBLICATIONS */
+.pub-filters {
+  display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap;
+}
+.pub-filter {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+  background: none;
+  cursor: none;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.pub-filter.active, .pub-filter:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+  background: rgba(0,212,170,0.05);
+}
+.pub-list { display: flex; flex-direction: column; gap: 2px; }
+.pub-item {
+  background: var(--bg2);
+  padding: 24px 32px;
+  display: grid;
+  grid-template-columns: 100px 1fr auto;
+  gap: 24px;
+  align-items: center;
+  transition: background 0.2s;
+}
+.pub-item:hover { background: var(--bg3); }
+.pub-type {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  text-align: center;
+}
+.pub-type.authored { border: 1px solid var(--teal); color: var(--teal); }
+.pub-type.media { border: 1px solid var(--amber); color: var(--amber); }
+.pub-type.tv { border: 1px solid var(--red); color: var(--red); }
+.pub-type.editor { border: 1px solid var(--text2); color: var(--text2); }
+.pub-type.speaker { border: 1px solid rgba(165,180,252,0.6); color: rgba(165,180,252,0.9); }
+.pub-title {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.pub-source {
+  font-size: 11px;
+  color: var(--text2);
+  margin-top: 4px;
+}
+.pub-year { font-size: 12px; color: var(--text2); white-space: nowrap; }
+.pub-link {
+  color: var(--teal);
+  text-decoration: none;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.pub-link:hover { text-decoration: underline; }
+
+/* MEDIA */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+}
+.media-card {
+  background: var(--bg2);
+  padding: 28px 32px;
+  display: flex; gap: 20px;
+  align-items: flex-start;
+  transition: background 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+.media-card:hover { background: var(--bg3); }
+.media-logo {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 6px 10px;
+  min-width: 80px;
+  text-align: center;
+}
+.media-logo.cnn { background: #c00; color: #fff; }
+.media-logo.kompas { background: #e63946; color: #fff; }
+.media-logo.tempo { background: #1a1a2e; color: #e0e0e0; border: 1px solid #333; }
+.media-logo.merdeka { background: #006400; color: #fff; }
+.media-logo.suara { background: #0d47a1; color: #fff; }
+.media-logo.gatra { background: #333; color: #fff; }
+.media-info { flex: 1; }
+.media-headline {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.media-meta { font-size: 11px; color: var(--text2); }
+.media-badge {
+  font-size: 10px;
+  padding: 3px 8px;
+  margin-left: 8px;
+  letter-spacing: 0.08em;
+}
+.media-badge.tv { background: rgba(255,77,109,0.15); color: var(--red); border: 1px solid rgba(255,77,109,0.3); }
+.media-badge.print { background: rgba(245,158,11,0.1); color: var(--amber); border: 1px solid rgba(245,158,11,0.2); }
+
+/* NOTES */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.note-card {
+  background: var(--bg2);
+  padding: 32px;
+  transition: background 0.2s;
+}
+.note-card:hover { background: var(--bg3); }
+.note-tag {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.note-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.note-excerpt {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.7;
+}
+.note-date { font-size: 11px; color: var(--text2); margin-top: 20px; }
+
+/* CONTACT */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+}
+.contact-info { display: flex; flex-direction: column; gap: 32px; }
+.contact-item { display: flex; flex-direction: column; gap: 6px; }
+.contact-key {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--teal);
+  text-transform: uppercase;
+}
+.contact-val {
+  font-size: 16px;
+  color: var(--text);
+}
+.contact-val a { color: var(--text); text-decoration: none; }
+.contact-val a:hover { color: var(--teal); }
+.contact-social { display: flex; gap: 16px; margin-top: 16px; flex-wrap: wrap; }
+.social-link {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text2);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  transition: all 0.2s;
+  display: flex; align-items: center; gap: 8px;
+}
+.social-link:hover { border-color: var(--teal); color: var(--teal); }
+.contact-tagline {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--text2);
+  line-height: 1.4;
+}
+.contact-tagline strong { color: var(--text); font-style: normal; font-weight: 600; }
+
+/* FOOTER */
+footer {
+  padding: 32px 48px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--text2);
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* TICKER */
+.ticker-wrap {
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+  background: var(--bg2);
+}
+.ticker {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker 30s linear infinite;
+  gap: 0;
+}
+.ticker-item {
+  font-size: 11px;
+  color: var(--text2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0 48px;
+}
+.ticker-item span { color: var(--teal); margin: 0 8px; }
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Z-INDEX FIX — content above canvas */
+nav, section, .ticker-wrap, footer { position: relative; z-index: 1; }
+
+/* DATA FIRST SPOTLIGHT */
+.datafirst-wrap {
+  position: relative;
+  margin-bottom: 28px;
+  display: inline-block;
+}
+.datafirst-text {
+  font-family: var(--serif);
+  font-size: clamp(40px, 9vw, 112px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0,212,170,0.25);
+  background: linear-gradient(135deg, transparent 0%, transparent 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  position: relative;
+  display: inline-block;
+  cursor: none;
+  transition: -webkit-text-stroke 0.3s;
+  /* Glowing spotlight via filter */
+  filter: drop-shadow(0 0 0px var(--teal));
+  animation: datafirstPulse 3s ease-in-out infinite;
+}
+/* Spotlight overlay using clip-path on a pseudo element */
+.datafirst-text::before {
+  content: 'DATA FIRST.';
+  position: absolute;
+  inset: 0;
+  font-family: var(--serif);
+  font-size: inherit;
+  font-weight: 900;
+  letter-spacing: inherit;
+  line-height: inherit;
+  background: linear-gradient(
+    135deg,
+    var(--teal) 0%,
+    #00ffcc 40%,
+    var(--amber) 70%,
+    var(--teal) 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 0px transparent;
+  clip-path: circle(80px at var(--mx, 50%) var(--my, 50%));
+  animation: gradientShift 4s ease infinite;
+  pointer-events: none;
+}
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes datafirstPulse {
+  0%, 100% {
+    -webkit-text-stroke: 1px rgba(0,212,170,0.2);
+    filter: drop-shadow(0 0 0px var(--teal));
+  }
+  50% {
+    -webkit-text-stroke: 1px rgba(0,212,170,0.4);
+    filter: drop-shadow(0 0 12px rgba(0,212,170,0.15));
+  }
+}
+
+
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  section { padding: 64px 24px; }
+  .hero { padding: 100px 24px 64px; }
+  .hero-stats { grid-template-columns: repeat(2, auto); gap: 24px; }
+  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  .skills-grid, .projects-grid, .notes-grid { grid-template-columns: 1fr; }
+  .media-grid { grid-template-columns: 1fr; }
+  .exp-item { grid-template-columns: 1fr; gap: 12px; }
+  .pub-item { grid-template-columns: 80px 1fr; }
+  .pub-year { display: none; }
+  .hero-cta { position: static; margin-top: 40px; }
+}
+
+/* PROJECT TABS */
+.proj-tab {
+  padding: 10px 24px;
+  background: var(--bg2);
+  border: none;
+  color: var(--text2);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: all 0.2s;
+}
+.proj-tab.active {
+  background: rgba(0,212,170,0.1);
+  color: var(--teal);
+  border-bottom: 2px solid var(--teal);
+}
+.proj-tab:hover { color: var(--teal); }
+
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Yemiko Happy Nandatama</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#media">Media</a></li>
+    <li><a href="#notes">Notes</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#admin" onclick="openAdmin()">⚙</a></li>
+  </ul>
+</nav>
+
+<!-- BINARY CANVAS -->
+<canvas id="binaryCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none !important;z-index:0;opacity:0.18;user-select:none;"></canvas>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-label">// Portfolio — Lumajang, East Java</div>
+  <div class="datafirst-wrap">
+    <span class="datafirst-text" id="dataFirstText">DATA FIRST.</span>
+  </div>
+  <p class="hero-tagline">Turning citizen-generated data into policy that matters — across public health, climate, and social advocacy.</p>
+  <div class="hero-roles">
+    <span class="role-tag">Project Coordinator</span>
+    <span class="role-tag">Social Researcher</span>
+    <span class="role-tag">M&E Specialist</span>
+    <span class="role-tag">Policy Advocate</span>
+    <span class="role-tag">Data Analyst</span>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">14+</div>
+      <div class="stat-label">Policy Reports</div>
+    </div>
+    <div>
+      <div class="stat-num">12</div>
+      <div class="stat-label">Researchers Led</div>
+    </div>
+    <div>
+      <div class="stat-num">4+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div>
+      <div class="stat-num">200+</div>
+      <div class="stat-label">Community Members</div>
+    </div>
+  </div>
+  <div class="hero-cta">
+    <a href="#contact" class="btn btn-primary">Get in touch</a>
+    <a href="#publications" class="btn btn-secondary">View work</a>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">CNN Indonesia<span>✦</span></span>
+    <span class="ticker-item">Kompas TV<span>✦</span></span>
+    <span class="ticker-item">Kompas.com<span>✦</span></span>
+    <span class="ticker-item">Tempo.co<span>✦</span></span>
+    <span class="ticker-item">Springer Nature<span>✦</span></span>
+    <span class="ticker-item">Transparency International<span>✦</span></span>
+    <span class="ticker-item">LaporCovid-19<span>✦</span></span>
+    <span class="ticker-item">Plan International<span>✦</span></span>
+    <span class="ticker-item">ITB FTSL<span>✦</span></span>
+    <span class="ticker-item">CNN Indonesia<span>✦</span></span>
+    <span class="ticker-item">Kompas TV<span>✦</span></span>
+    <span class="ticker-item">Kompas.com<span>✦</span></span>
+    <span class="ticker-item">Tempo.co<span>✦</span></span>
+    <span class="ticker-item">Springer Nature<span>✦</span></span>
+    <span class="ticker-item">Transparency International<span>✦</span></span>
+    <span class="ticker-item">LaporCovid-19<span>✦</span></span>
+    <span class="ticker-item">Plan International<span>✦</span></span>
+    <span class="ticker-item">ITB FTSL<span>✦</span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label reveal">// 01 — About</div>
+  <h2 class="section-title reveal">Who I Am</h2>
+  <div class="about-grid">
+    <div class="about-bio reveal">
+      <p>I'm a <strong>project coordinator, social researcher, and policy advocate</strong> with 4+ years leading data-driven programmes across public health, climate, and civil society sectors in Indonesia.</p>
+      <p>My background in <strong>Theology (UKSW, GPA 3.74)</strong> is not incidental — it grounds my research in ethics, community trust, and participatory approaches. I believe data is only as powerful as the communities that generate it and the policies that respond to it.</p>
+      <p>At <strong>LaporCovid-19</strong>, I coordinated national-scale citizen reporting at a moment of genuine public health crisis. At <strong>Lapor Iklim</strong>, I carried that commitment into climate advocacy. My work has reached the floors of national media and the desks of government ministers.</p>
+
+    </div>
+    <div class="about-details reveal">
+      <div class="detail-item">
+        <div class="detail-key">Location</div>
+        <div class="detail-val">Lumajang, East Java, Indonesia</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-key">Email</div>
+        <div class="detail-val"><a href="mailto:yemhappy5@gmail.com">yemhappy5@gmail.com</a></div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-key">Phone</div>
+        <div class="detail-val"><a href="tel:+6285183110239">+62 851 8311 0239</a></div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-key">LinkedIn</div>
+        <div class="detail-val"><a href="https://www.linkedin.com/in/yemiko-happy-nandatama-a2b494405/" target="_blank">yemiko-happy-nandatama</a></div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-key">Education</div>
+        <div class="detail-val">B.Sc. Theology — UKSW 2020<br><span style="color:var(--text2);font-size:12px">GPA 3.74 / 4.00</span></div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-key">Languages</div>
+        <div class="detail-val">Indonesian (Native) · English (Working Proficiency)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label reveal">// 02 — Skills</div>
+  <h2 class="section-title reveal">What I Do</h2>
+  <div class="skills-grid reveal">
+    <div class="skill-group">
+      <div class="skill-group-title">Programme & Project Management</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-name"><span>Project Coordination</span><span class="skill-pct">95%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-pct="95"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-name"><span>Stakeholder Engagement</span><span class="skill-pct">92%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-pct="92"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-name"><span>Monitoring & Evaluation</span><span class="skill-pct">90%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-pct="90"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-name"><span>Strategic Communication</span><span class="skill-pct">88%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-pct="88"></div></div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Research & Data Analysis</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-name"><span>Report & Policy Writing</span><span class="skill-pct">90%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-pct="90"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-name"><span>Mixed-Methods Research</span><span class="skill-pct">88%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-pct="88"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-name"><span>Data Visualization</span><span class="skill-pct">82%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-pct="82"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-name"><span>Community Facilitation</span><span class="skill-pct">88%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-pct="88"></div></div>
+      </div>
+    </div>
+    <div class="skill-group" style="grid-column:1/-1">
+      <div class="skill-group-title">Tools & Software</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+        <div>
+          <div style="font-size:11px;color:var(--teal);margin-bottom:12px;letter-spacing:0.1em">ADVANCED</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Excel (Pivot, VLOOKUP)</span>
+            <span class="skill-tag">SPSS</span>
+            <span class="skill-tag">Tableau</span>
+            <span class="skill-tag">NVivo</span>
+            <span class="skill-tag">Qualtrics</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--amber);margin-bottom:12px;letter-spacing:0.1em">PROFICIENT</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Power BI</span>
+            <span class="skill-tag">Google Data Studio</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">Canva</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label reveal">// 03 — Experience</div>
+  <h2 class="section-title reveal">Where I've Worked</h2>
+  <div class="exp-list">
+    <div class="exp-item reveal">
+      <div>
+        <div class="exp-date">Mar 2021 — Mar 2024</div>
+        <div class="exp-org">LaporCovid-19 / Yayasan Warga Berdaya</div>
+        <div class="exp-loc">Jakarta · Remote</div>
+      </div>
+      <div>
+        <div class="exp-title">Head of Social Research</div>
+        <ul class="exp-bullets">
+          <li>Led full-cycle programme implementation, coordinating 12 researchers & volunteers at national scale</li>
+          <li>Designed M&E framework; analysed 12+ citizen field reports weekly using SPSS, NVivo & Excel</li>
+          <li>Built monitoring dashboards (Tableau, Power BI, Google Data Studio) for government & NGO stakeholders</li>
+          <li>Produced 14+ structured policy reports & co-authored 3 policy briefs via Yayasan Warga Berdaya</li>
+          <li>Engaged strategic partners: YLBHI, ICW, Lokataru, Transparency International Indonesia</li>
+          <li>Featured on CNN Indonesia & Kompas TV as civil society expert spokesperson</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="exp-tag">M&E</span>
+          <span class="exp-tag">Policy Advocacy</span>
+          <span class="exp-tag">SPSS</span>
+          <span class="exp-tag">NVivo</span>
+          <span class="exp-tag">Tableau</span>
+          <span class="exp-tag">Qualtrics</span>
+        </div>
+      </div>
+    </div>
+    <div class="exp-item reveal">
+      <div>
+        <div class="exp-date">Nov 2024 — Dec 2025</div>
+        <div class="exp-org">Lapor Iklim / Warga Berdaya</div>
+        <div class="exp-loc">Jakarta · Remote</div>
+      </div>
+      <div>
+        <div class="exp-title">Podcast Manager</div>
+        <ul class="exp-bullets">
+          <li>Managed end-to-end production workflow for a national climate-focused podcast series</li>
+          <li>Coordinated editorial scheduling and stakeholder engagement with external speakers</li>
+          <li>Ensured alignment with strategic climate advocacy communication goals</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="exp-tag">Climate</span>
+          <span class="exp-tag">Content Strategy</span>
+          <span class="exp-tag">Editorial</span>
+        </div>
+      </div>
+    </div>
+    <div class="exp-item reveal">
+      <div>
+        <div class="exp-date">Jan 2022 — Mar 2026</div>
+        <div class="exp-org">GKMI Synod</div>
+        <div class="exp-loc">Salatiga</div>
+      </div>
+      <div>
+        <div class="exp-title">Community Development Lead</div>
+        <ul class="exp-bullets">
+          <li>Designed & delivered community programmes for 200+ members focused on youth development</li>
+          <li>Facilitated conflict mediation & cross-stakeholder communication across diverse community groups</li>
+          <li>Mentored 6 youth through competitive scholarship applications — 100% success rate</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="exp-tag">Community Development</span>
+          <span class="exp-tag">Youth</span>
+          <span class="exp-tag">Facilitation</span>
+        </div>
+      </div>
+    </div>
+    <div class="exp-item reveal">
+      <div>
+        <div class="exp-date">Nov 2020 — Mar 2022</div>
+        <div class="exp-org">Institut Teknologi Bandung (FTSL)</div>
+        <div class="exp-loc">Bandung</div>
+      </div>
+      <div>
+        <div class="exp-title">Research Associate</div>
+        <ul class="exp-bullets">
+          <li>Supported 4-country urban infrastructure & climate research collaboration (coolinfrastructures.com)</li>
+          <li>Conducted data collection, processing & analysis for climate-related research</li>
+          <li>Contributed to M&E through structured reporting aligned with international standards</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="exp-tag">Climate Research</span>
+          <span class="exp-tag">Data Collection</span>
+          <span class="exp-tag">International</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label reveal">// 04 — Projects</div>
+  <h2 class="section-title reveal">Key Initiatives</h2>
+
+  <!-- Tab buttons -->
+  <div class="proj-tabs reveal" style="display:flex;gap:2px;margin-bottom:32px;">
+    <button class="proj-tab active" onclick="switchProjTab('collab',this)">Collaboration</button>
+    <button class="proj-tab" onclick="switchProjTab('solo',this)">Solo Projects</button>
+  </div>
+
+  <!-- COLLABORATION tab -->
+  <div id="proj-collab" class="proj-tab-content">
+    <div class="projects-grid" id="grid-collab">
+      <div class="project-card reveal">
+        <div class="project-icon">📊</div>
+        <div class="project-title">Citizen Data Programme — LaporCovid-19</div>
+        <div class="project-desc">Led national-scale citizen reporting platform coordinating 12+ researchers. Designed M&E frameworks, managed weekly analysis of citizen field reports, and translated findings into policy briefs presented directly to government stakeholders.</div>
+        <div class="project-meta">
+          <span class="project-year">2021 — 2024</span>
+          <a href="https://laporcovid19.org" target="_blank" class="project-link">laporcovid19.org →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-icon">🌡️</div>
+        <div class="project-title">Extreme Heat & COVID-19 Research — Urban Poor in Asia & Africa</div>
+        <div class="project-desc">Co-authored international research publication examining the intersection of extreme heat and COVID-19 impacts on urban poor communities across Asia and Africa. Published 2022 in collaboration with Cool Infrastructures project.</div>
+        <div class="project-meta">
+          <span class="project-year">2022</span>
+          <a href="https://coolinfrastructures.com" target="_blank" class="project-link">View project →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-icon">📋</div>
+        <div class="project-title">Policy Brief Series — Bansos & Vaccination Equity</div>
+        <div class="project-desc">Co-authored three policy briefs published by Yayasan Warga Berdaya on COVID-19 social protection equity in East Java, citizen complaints on pandemic aid, and a two-year critical assessment of Indonesia's pandemic response.</div>
+        <div class="project-meta">
+          <span class="project-year">2021 — 2022</span>
+          <a href="https://wargaberdaya.org" target="_blank" class="project-link">wargaberdaya.org →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-icon">🎙️</div>
+        <div class="project-title">Lapor Iklim Podcast — Climate Advocacy</div>
+        <div class="project-desc">Managed full production workflow for a national climate-focused podcast series under Lapor Iklim, coordinating content planning, editorial scheduling, and engagement with scientists, activists, and government speakers.</div>
+        <div class="project-meta">
+          <span class="project-year">2024 — 2025</span>
+          <a href="https://wargaberdaya.org" target="_blank" class="project-link">wargaberdaya.org →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-icon">🔬</div>
+        <div class="project-title">Long COVID Quality of Life Study — Springer Nature</div>
+        <div class="project-desc">Contributed to data collection for a peer-reviewed study on quality of life among individuals with Long COVID in Indonesia, published in Discover Mental Health (Springer Nature) in 2026.</div>
+        <div class="project-meta">
+          <span class="project-year">2026</span>
+          <a href="https://link.springer.com" target="_blank" class="project-link">Springer Nature →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-icon">🤝</div>
+        <div class="project-title">4-Country Climate Infrastructure Research — ITB</div>
+        <div class="project-desc">Supported implementation of an international urban infrastructure and climate research collaboration spanning 4 countries, conducting data collection and analysis aligned with international research standards at FTSL ITB Bandung.</div>
+        <div class="project-meta">
+          <span class="project-year">2020 — 2022</span>
+          <a href="https://coolinfrastructures.com" target="_blank" class="project-link">coolinfrastructures.com →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOLO tab -->
+  <div id="proj-solo" class="proj-tab-content" style="display:none;">
+    <div class="projects-grid" id="grid-solo">
+      <!-- Populated from GitHub JSON via loadProjects() -->
+      <div id="solo-empty" style="grid-column:1/-1;padding:48px;text-align:center;color:var(--text2);font-size:13px;">
+        // No solo projects yet. Add via admin panel.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="section-label reveal">// 05 — Publications</div>
+  <h2 class="section-title reveal">Written Work</h2>
+  <div class="pub-filters reveal">
+    <button class="pub-filter active" onclick="filterPubs('all', this)">All</button>
+    <button class="pub-filter" onclick="filterPubs('authored', this)">Authored</button>
+    <button class="pub-filter" onclick="filterPubs('editor', this)">Editorial</button>
+    <button class="pub-filter" onclick="filterPubs('speaker', this)">Speaking</button>
+  </div>
+  <div class="pub-list" id="pubList">
+    <div class="pub-item reveal" data-type="authored">
+      <span class="pub-type authored">Co-Author</span>
+      <div>
+        <div class="pub-title">Extreme Heat and COVID-19: The Impact on the Urban Poor in Asia and Africa</div>
+        <div class="pub-source">Cool Infrastructures International Research Collaboration</div>
+      </div>
+      <span class="pub-year">2022</span>
+    </div>
+    <div class="pub-item reveal" data-type="authored">
+      <span class="pub-type authored">Co-Author</span>
+      <div>
+        <div class="pub-title">Policy Brief: Evaluasi Kebijakan Penanganan Pandemi — Integritas Bansos & Vaksinasi di Jawa Timur</div>
+        <div class="pub-source">Yayasan Warga Berdaya / LaporCovid-19</div>
+      </div>
+      <span class="pub-year">2022</span>
+    </div>
+    <div class="pub-item reveal" data-type="authored">
+      <span class="pub-type authored">Co-Author</span>
+      <div>
+        <div class="pub-title">Laporan Keluhan Warga Mengenai Bantuan Sosial Selama Pandemi Covid-19</div>
+        <div class="pub-source">Yayasan Warga Berdaya / LaporCovid-19</div>
+      </div>
+      <span class="pub-year">2021</span>
+    </div>
+    <div class="pub-item reveal" data-type="authored">
+      <span class="pub-type authored">Co-Author</span>
+      <div>
+        <div class="pub-title">Catatan Kritis Pembelajaran 2 Tahun Pandemi Covid-19</div>
+        <div class="pub-source">Yayasan Warga Berdaya / LaporCovid-19</div>
+      </div>
+      <span class="pub-year">2022</span>
+    </div>
+    <div class="pub-item reveal" data-type="authored">
+      <span class="pub-type authored">Contributor</span>
+      <div>
+        <div class="pub-title">Quality of Life Among Individuals with Long COVID in Indonesia</div>
+        <div class="pub-source">Springer Nature — Discover Mental Health Journal</div>
+      </div>
+      <span class="pub-year">2026</span>
+    </div>
+    <div class="pub-item reveal" data-type="authored">
+      <span class="pub-type authored">Cited</span>
+      <div>
+        <div class="pub-title">Reporting Pandemic, Engaging Public: Citizen Participation in LaporCovid-19 Platform</div>
+        <div class="pub-source">Ultimacomm Academic Journal, Vol. 15</div>
+      </div>
+      <span class="pub-year">2023</span>
+    </div>
+    <div class="pub-item reveal" data-type="editor">
+      <span class="pub-type editor">Editor</span>
+      <div>
+        <div class="pub-title">Annual Report — Yayasan Pusaka Bentala Rakyat</div>
+        <div class="pub-source">Yayasan Pusaka Bentala Rakyat</div>
+      </div>
+      <span class="pub-year">2025</span>
+    </div>
+    <div class="pub-item reveal" data-type="editor">
+      <span class="pub-type editor">Editor</span>
+      <div>
+        <div class="pub-title">Kitab Sasmita Dhuwung & Menyusun Kepingan Hati</div>
+        <div class="pub-source">Book Publication</div>
+      </div>
+      <span class="pub-year">2026</span>
+    </div>
+    <div class="pub-item reveal" data-type="speaker">
+      <span class="pub-type speaker">Speaker</span>
+      <div>
+        <div class="pub-title">Health Sector Corruption — Public Forum</div>
+        <div class="pub-source">Transparency International Indonesia</div>
+      </div>
+      <span class="pub-year">2022</span>
+    </div>
+    <div class="pub-item reveal" data-type="speaker">
+      <span class="pub-type speaker">Facilitator</span>
+      <div>
+        <div class="pub-title">Young Interfaith Peacemaker Community Indonesia</div>
+        <div class="pub-source">Multi-year facilitation programme</div>
+      </div>
+      <span class="pub-year">2018–2022</span>
+    </div>
+    <div class="pub-item reveal" data-type="speaker">
+      <span class="pub-type speaker">Member</span>
+      <div>
+        <div class="pub-title">Kawan Bung Hatta Anti-Corruption Award</div>
+        <div class="pub-source">Anti-Corruption Recognition Programme</div>
+      </div>
+      <span class="pub-year">—</span>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA -->
+<section id="media">
+  <div class="section-label reveal">// 06 — Media</div>
+  <h2 class="section-title reveal">In The Press</h2>
+  <div class="media-grid">
+    <a class="media-card reveal" href="https://www.youtube.com/watch?v=8mENFYFY1hI" target="_blank">
+      <div class="media-logo cnn">CNN<br>Indonesia</div>
+      <div class="media-info">
+        <div class="media-headline">Lockdown Policy Considerations During COVID-19 Surge — Live Interview alongside Kadin Indonesia</div>
+        <div class="media-meta">June 2021 <span class="media-badge tv">TV · LIVE</span></div>
+      </div>
+    </a>
+    <a class="media-card reveal" href="https://www.youtube.com/watch?v=uXvJE2r--1s" target="_blank">
+      <div class="media-logo kompas">Kompas<br>TV</div>
+      <div class="media-info">
+        <div class="media-headline">In-Person Learning (PTM) Risks & Policy — Live Panel alongside Governor of East Java Khofifah</div>
+        <div class="media-meta">August 2021 <span class="media-badge tv">TV · PANEL</span></div>
+      </div>
+    </a>
+    <a class="media-card reveal" href="https://kompas.com" target="_blank">
+      <div class="media-logo kompas">Kompas<br>.com</div>
+      <div class="media-info">
+        <div class="media-headline">NIK Duplication & COVID-19 Vaccination Access Barriers — Quoted as Expert</div>
+        <div class="media-meta">December 2021 <span class="media-badge print">Print · Online</span></div>
+      </div>
+    </a>
+    <a class="media-card reveal" href="https://tempo.co" target="_blank">
+      <div class="media-logo tempo">Tempo<br>.co</div>
+      <div class="media-info">
+        <div class="media-headline">Civil Society Coalition on In-Person Learning (PTM) Policy — Expert Source</div>
+        <div class="media-meta">November 2021 <span class="media-badge print">Print · Online</span></div>
+      </div>
+    </a>
+    <a class="media-card reveal" href="https://merdeka.com" target="_blank">
+      <div class="media-logo merdeka">Merdeka<br>.com</div>
+      <div class="media-info">
+        <div class="media-headline">528 Citizen Reports on Health Protocol Violations During PPKM Darurat</div>
+        <div class="media-meta">July 2021 <span class="media-badge print">Online</span></div>
+      </div>
+    </a>
+    <a class="media-card reveal" href="https://suara.com" target="_blank">
+      <div class="media-logo suara">Suara<br>.com</div>
+      <div class="media-info">
+        <div class="media-headline">16 Government Offices Violating WFO Rules During PPKM Darurat</div>
+        <div class="media-meta">July 2021 <span class="media-badge print">Online</span></div>
+      </div>
+    </a>
+    <a class="media-card reveal" href="https://gatra.com" target="_blank">
+      <div class="media-logo gatra">Gatra<br>.com</div>
+      <div class="media-info">
+        <div class="media-headline">PPKM Darurat Evaluation: Three Regions with Most Protocol Violations</div>
+        <div class="media-meta">July 2021 <span class="media-badge print">Online</span></div>
+      </div>
+    </a>
+    <a class="media-card reveal" href="https://tempo.co" target="_blank">
+      <div class="media-logo tempo">Tempo<br>.co</div>
+      <div class="media-info">
+        <div class="media-headline">Office & Business Sectors Most Reported for Health Protocol Breaches</div>
+        <div class="media-meta">July 2021 <span class="media-badge print">Online</span></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- NOTES -->
+<section id="notes">
+  <div class="section-label reveal">// 07 — Notes</div>
+  <h2 class="section-title reveal">Thoughts & Reflections</h2>
+  <div class="notes-grid">
+    <div class="note-card reveal">
+      <div class="note-tag">Public Health · Advocacy</div>
+      <div class="note-title">What Citizen Data Can (and Cannot) Do</div>
+      <div class="note-excerpt">Citizen-generated data is powerful precisely because it captures what official channels miss. But it also carries its own biases, gaps, and risks. At LaporCovid-19, we learned this the hard way — and it made our research better.</div>
+      <div class="note-date">Reflections from 2021–2024</div>
+    </div>
+    <div class="note-card reveal">
+      <div class="note-tag">Climate · Community</div>
+      <div class="note-title">Climate Justice Starts with Listening</div>
+      <div class="note-excerpt">The communities most vulnerable to climate change are often those least heard in policy rooms. My work at Lapor Iklim reinforced a simple truth: good climate policy requires proximity to affected communities, not just data models.</div>
+      <div class="note-date">Reflections from 2024–2025</div>
+    </div>
+    <div class="note-card reveal">
+      <div class="note-tag">Research · Method</div>
+      <div class="note-title">Why Mixed Methods Still Matter</div>
+      <div class="note-excerpt">In an era of big data, there's pressure to reduce everything to numbers. But numbers without context are stories without meaning. Mixed-methods research — combining the quantitative with the qualitative — remains the most honest approach to complex social problems.</div>
+      <div class="note-date">Ongoing reflection</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label reveal">// 08 — Contact</div>
+  <h2 class="section-title reveal">Let's Work Together</h2>
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <div class="contact-item">
+        <div class="contact-key">Email</div>
+        <div class="contact-val"><a href="mailto:yemhappy5@gmail.com">yemhappy5@gmail.com</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-key">Location</div>
+        <div class="contact-val">Lumajang, East Java, Indonesia</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-key">Connect</div>
+        <div class="contact-social">
+          <a class="social-link" href="https://www.linkedin.com/in/yemiko-happy-nandatama-a2b494405/" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <a class="social-link" href="https://masmik.netlify.app" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            Portfolio
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="contact-tagline reveal">
+      <p>Good research changes policy. Good policy changes lives. <strong>That's why data comes first.</strong></p>
+      <br>
+      <p style="font-size:16px;color:var(--text2)">Whether you're a recruiter, researcher, or community organiser — I'd love to hear from you.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Yemiko Happy Nandatama</span>
+  <span style="color:var(--teal)">Data First.</span>
+  <span>Lumajang, East Java · Indonesia</span>
+</footer>
+
+<!-- ADMIN PANEL -->
+<div id="adminOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:2000;backdrop-filter:blur(8px);overflow-y:auto;">
+  <!-- LOGIN SCREEN -->
+  <div id="adminLogin" style="display:flex;align-items:center;justify-content:center;min-height:100vh;">
+    <div style="background:#111;border:1px solid rgba(0,212,170,0.2);padding:48px;width:400px;max-width:90vw;">
+      <div style="font-size:11px;letter-spacing:0.2em;color:var(--teal);margin-bottom:8px;">// ADMIN</div>
+      <div style="font-family:var(--serif);font-size:28px;font-weight:900;margin-bottom:32px;">Panel Access</div>
+      <input id="adminPass" type="password" placeholder="Enter password" style="width:100%;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);color:var(--text);font-family:var(--mono);font-size:14px;padding:12px 16px;margin-bottom:8px;outline:none;" onkeydown="if(event.key==='Enter')checkAdmin()">
+      <div id="adminError" style="font-size:11px;color:var(--red);margin-bottom:16px;display:none;">// error: invalid credentials</div>
+      <button onclick="checkAdmin()" style="width:100%;background:var(--teal);color:#000;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:0.12em;padding:12px;border:none;cursor:pointer;">ENTER →</button>
+      <button onclick="closeAdmin()" style="width:100%;background:none;border:1px solid rgba(255,255,255,0.1);color:var(--text2);font-family:var(--mono);font-size:11px;padding:10px;margin-top:8px;cursor:pointer;">CANCEL</button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="adminDash" style="display:none;padding:40px 48px;max-width:1200px;margin:0 auto;">
+    <!-- Header -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border);">
+      <div>
+        <div style="font-size:11px;letter-spacing:0.2em;color:var(--teal);margin-bottom:4px;">// ADMIN DASHBOARD</div>
+        <div style="font-family:var(--serif);font-size:32px;font-weight:900;">Content Manager</div>
+      </div>
+      <button onclick="closeAdmin()" style="padding:10px 20px;border:1px solid var(--border);background:none;color:var(--text2);font-family:var(--mono);font-size:11px;cursor:pointer;letter-spacing:0.1em;">✕ CLOSE</button>
+    </div>
+
+    <!-- Tab Nav -->
+    <div style="display:flex;gap:2px;margin-bottom:32px;">
+      <button class="admin-tab active" onclick="showTab('blog',this)">📝 Blog Posts</button>
+      <button class="admin-tab" onclick="showTab('photos',this)">📷 Photos</button>
+      <button class="admin-tab" onclick="showTab('projects',this)">🗂 Projects</button>
+      <button class="admin-tab" onclick="showTab('settings',this)">⚙ Settings</button>
+    </div>
+
+    <!-- BLOG TAB -->
+    <div id="tab-blog" class="admin-tab-content">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+        <!-- Write -->
+        <div>
+          <div style="font-size:11px;letter-spacing:0.15em;color:var(--teal);margin-bottom:16px;">// NEW POST</div>
+          <input id="postTitle" placeholder="Post title..." style="width:100%;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);color:var(--text);font-family:var(--mono);font-size:14px;padding:12px 16px;margin-bottom:8px;outline:none;">
+          <input id="postTag" placeholder="Tag (e.g. Research · Climate)" style="width:100%;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);color:var(--text);font-family:var(--mono);font-size:13px;padding:10px 16px;margin-bottom:8px;outline:none;">
+          <input id="postExcerpt" placeholder="Short excerpt (shown on card)..." style="width:100%;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);color:var(--text);font-family:var(--mono);font-size:13px;padding:10px 16px;margin-bottom:8px;outline:none;">
+          <textarea id="postBody" placeholder="Full post content (Markdown supported)..." rows="12" style="width:100%;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);color:var(--text);font-family:var(--mono);font-size:13px;padding:12px 16px;margin-bottom:8px;outline:none;resize:vertical;line-height:1.7;"></textarea>
+          <button onclick="savePost()" style="background:var(--teal);color:#000;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:0.12em;padding:12px 24px;border:none;cursor:pointer;margin-right:8px;">PUBLISH POST</button>
+          <button onclick="clearPost()" style="background:none;border:1px solid var(--border);color:var(--text2);font-family:var(--mono);font-size:11px;padding:11px 16px;cursor:pointer;">CLEAR</button>
+          <div id="postMsg" style="font-size:11px;color:var(--teal);margin-top:12px;display:none;">✓ Post published successfully</div>
+        </div>
+        <!-- Published posts list -->
+        <div>
+          <div style="font-size:11px;letter-spacing:0.15em;color:var(--teal);margin-bottom:16px;">// PUBLISHED POSTS</div>
+          <div id="postList" style="display:flex;flex-direction:column;gap:2px;max-height:480px;overflow-y:auto;"></div>
+          <div id="noPostsMsg" style="font-size:12px;color:var(--text2);padding:20px 0;">No posts yet. Write your first entry above.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHOTOS TAB -->
+    <div id="tab-photos" class="admin-tab-content" style="display:none;">
+      <div style="font-size:11px;letter-spacing:0.15em;color:var(--teal);margin-bottom:16px;">// UPLOAD PHOTOS</div>
+      <div id="dropZone" style="border:2px dashed rgba(0,212,170,0.3);padding:48px;text-align:center;margin-bottom:24px;cursor:pointer;transition:all 0.2s;" onclick="document.getElementById('photoInput').click()" ondragover="event.preventDefault();this.style.borderColor='var(--teal)'" ondragleave="this.style.borderColor='rgba(0,212,170,0.3)'" ondrop="handleDrop(event)">
+        <div style="font-size:32px;margin-bottom:12px;">📷</div>
+        <div style="font-family:var(--serif);font-size:20px;margin-bottom:8px;">Drop photos here</div>
+        <div style="font-size:12px;color:var(--text2)">or click to browse · JPG, PNG, WebP · max 5MB each</div>
+        <input type="file" id="photoInput" multiple accept="image/*" style="display:none" onchange="handlePhotoUpload(this.files)">
+      </div>
+      <div id="photoGallery" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;"></div>
+      <div id="noPhotosMsg" style="font-size:12px;color:var(--text2);padding:20px 0;">No photos uploaded yet.</div>
+    </div>
+
+    <!-- PROJECTS TAB -->
+    <div id="tab-projects" class="admin-tab-content" style="display:none;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+        <div>
+          <div style="font-size:11px;letter-spacing:0.15em;color:var(--teal);margin-bottom:16px;">// ADD PROJECT</div>
+          <select id="projType" style="width:100%;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);color:var(--text);font-family:var(--mono);font-size:13px;padding:10px 16px;margin-bottom:8px;outline:none;">
+            <option value="solo">Solo Project</option>
+            <option value="collab">Collaboration</option>
+          </select>
+          <input id="projTitle" placeholder="Project title..." style="width:100%;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);color:var(--text);font-family:var(--mono);font-size:14px;padding:12px 16px;margin-bottom:8px;outline:none;">
+          <input id="projYear" placeholder="Year (e.g. 2026)" style="width:100%;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);color:var(--text);font-family:var(--mono);font-size:13px;padding:10px 16px;margin-bottom:8px;outline:none;">
+          <input id="projLink" placeholder="URL (optional)" style="width:100%;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);color:var(--text);font-family:var(--mono);font-size:13px;padding:10px 16px;margin-bottom:8px;outline:none;">
+          <input id="projIcon" placeholder="Emoji icon (e.g. 🌐)" style="width:100%;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);color:var(--text);font-family:var(--mono);font-size:13px;padding:10px 16px;margin-bottom:8px;outline:none;">
+          <textarea id="projDesc" placeholder="Project description..." rows="5" style="width:100%;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);color:var(--text);font-family:var(--mono);font-size:13px;padding:12px 16px;margin-bottom:8px;outline:none;resize:vertical;"></textarea>
+          <button onclick="saveProjectGH()" style="background:var(--teal);color:#000;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:0.12em;padding:12px 24px;border:none;cursor:pointer;">SAVE TO GITHUB</button>
+          <div id="projMsg" style="font-size:11px;color:var(--teal);margin-top:12px;display:none;"></div>
+        </div>
+        <div>
+          <div style="font-size:11px;letter-spacing:0.15em;color:var(--teal);margin-bottom:16px;">// SAVED PROJECTS</div>
+          <div id="projectList" style="display:flex;flex-direction:column;gap:2px;max-height:400px;overflow-y:auto;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div id="tab-settings" class="admin-tab-content" style="display:none;">
+      <div style="max-width:480px;">
+        <div style="font-size:11px;letter-spacing:0.15em;color:var(--teal);margin-bottom:16px;">// CHANGE PASSWORD</div>
+        <input id="newPass1" type="password" placeholder="New password..." style="width:100%;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);color:var(--text);font-family:var(--mono);font-size:14px;padding:12px 16px;margin-bottom:8px;outline:none;">
+        <input id="newPass2" type="password" placeholder="Confirm new password..." style="width:100%;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);color:var(--text);font-family:var(--mono);font-size:14px;padding:12px 16px;margin-bottom:12px;outline:none;">
+        <button onclick="changePassword()" style="background:var(--teal);color:#000;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:0.12em;padding:12px 24px;border:none;cursor:pointer;">UPDATE PASSWORD</button>
+        <div id="passMsg" style="font-size:11px;margin-top:12px;display:none;"></div>
+
+        <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--border);">
+          <div style="font-size:11px;letter-spacing:0.15em;color:var(--teal);margin-bottom:16px;">// EXPORT DATA</div>
+          <p style="font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.7;">Download all your content (posts, projects, photos) as a JSON file for backup.</p>
+          <button onclick="exportData()" style="background:none;border:1px solid var(--teal);color:var(--teal);font-family:var(--mono);font-size:12px;padding:12px 24px;cursor:pointer;letter-spacing:0.1em;">↓ EXPORT JSON</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* NAV LOGO — subtle header treatment */
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: rgba(160,152,128,0.5);
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+.nav-logo:hover { color: var(--text2); }
+
+.admin-tab {
+  padding: 10px 20px;
+  background: var(--bg2);
+  border: none;
+  color: var(--text2);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.admin-tab.active, .admin-tab:hover {
+  background: var(--bg3);
+  color: var(--teal);
+}
+.post-card {
+  background: var(--bg3);
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.post-card-title { font-size: 13px; color: var(--text); margin-bottom: 4px; }
+.post-card-meta { font-size: 10px; color: var(--text2); }
+.post-card-del {
+  font-size: 11px; color: var(--red);
+  background: none; border: none; cursor: pointer;
+  padding: 4px; white-space: nowrap;
+}
+.photo-thumb {
+  aspect-ratio: 1;
+  object-fit: cover;
+  width: 100%;
+  position: relative;
+}
+.photo-wrap { position: relative; }
+.photo-wrap button {
+  position: absolute; top: 4px; right: 4px;
+  background: rgba(255,77,109,0.9);
+  border: none; color: #fff; width: 24px; height: 24px;
+  font-size: 12px; cursor: pointer; display: none;
+}
+.photo-wrap:hover button { display: block; }
+</style>
+
+<script>
+// ── BINARY RAIN WITH CURSOR ATTRACT ──
+const canvas = document.getElementById('binaryCanvas');
+const ctx = canvas.getContext('2d');
+
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const COLS = Math.floor(window.innerWidth / 18);
+const drops = [];
+const speeds = [];
+const chars = [];
+
+for (let i = 0; i < COLS; i++) {
+  drops.push(Math.random() * -100);
+  speeds.push(0.3 + Math.random() * 0.7);
+  chars.push(Math.random() > 0.5 ? '1' : '0');
+}
+
+function drawBinary() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (let i = 0; i < COLS; i++) {
+    const x = i * 18 + 9;
+    const y = drops[i] * 18;
+
+    // Distance from mouse
+    const dx = x - mouseX;
+    const dy = y - mouseY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    const attractRadius = 140;
+    const maxAttr = 22;
+
+    let drawX = x;
+    let drawY = y;
+    let alpha = 0.15 + Math.random() * 0.25;
+    let size = 11;
+    let color = '0,212,170'; // teal
+
+    if (dist < attractRadius) {
+      // Attract toward cursor
+      const force = (1 - dist / attractRadius);
+      drawX = x - dx * force * 0.5;
+      drawY = y - dy * force * 0.5;
+      alpha = 0.6 + force * 0.4;
+      size = 11 + force * 10;
+      // Color shift from teal to amber near cursor
+      const r = Math.floor(0 + force * 245);
+      const g = Math.floor(212 - force * 54);
+      const b = Math.floor(170 - force * 159);
+      color = `${r},${g},${b}`;
+    }
+
+    // Randomize 0/1 occasionally
+    if (Math.random() > 0.98) chars[i] = Math.random() > 0.5 ? '1' : '0';
+
+    ctx.save();
+    ctx.font = `${size}px 'Space Mono', monospace`;
+    ctx.fillStyle = `rgba(${color},${alpha})`;
+    ctx.fillText(chars[i], drawX, drawY);
+    ctx.restore();
+
+    drops[i] += speeds[i];
+    if (drops[i] * 18 > canvas.height + 20) {
+      drops[i] = Math.random() * -50;
+    }
+  }
+
+  requestAnimationFrame(drawBinary);
+}
+drawBinary();
+
+// mouseX/mouseY updated in cursor listener above
+
+// ── CURSOR ──
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let cursorX = -100, cursorY = -100;
+let ringX = -100, ringY = -100;
+
+// Use window-level listener to catch ALL mouse movement regardless of element
+window.addEventListener('mousemove', e => {
+  cursorX = e.clientX;
+  cursorY = e.clientY;
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+
+  cursor.style.left = cursorX + 'px';
+  cursor.style.top = cursorY + 'px';
+
+  // DATA FIRST spotlight tracking
+  const el = document.getElementById('dataFirstText');
+  if (el) {
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+    el.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+  }
+}, { passive: true });
+
+// Animate ring with lag using rAF
+function animateRing() {
+  ringX += (cursorX - ringX) * 0.12;
+  ringY += (cursorY - ringY) * 0.12;
+  ring.style.left = ringX + 'px';
+  ring.style.top = ringY + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
+    cursor.style.background = 'var(--amber)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    cursor.style.background = 'var(--teal)';
+  });
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Skill bars
+      entry.target.querySelectorAll('.skill-fill').forEach(bar => {
+        bar.style.width = bar.dataset.pct + '%';
+      });
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// Also trigger skill bars on section reveal
+document.querySelectorAll('.skill-fill').forEach(bar => {
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.style.width = e.target.dataset.pct + '%';
+    });
+  }, { threshold: 0.1 });
+  barObserver.observe(bar);
+});
+
+// Publications filter
+function filterPubs(type, btn) {
+  document.querySelectorAll('.pub-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.pub-item').forEach(item => {
+    item.style.display = (type === 'all' || item.dataset.type === type) ? 'grid' : 'none';
+  });
+}
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+// ── ADMIN PANEL ──
+const ADMIN_KEY = 'yhn_admin_pass';
+const DATA_KEY = 'yhn_content';
+
+function getPass() { return localStorage.getItem(ADMIN_KEY) || 'datafirst2026'; }
+function getData() { return JSON.parse(localStorage.getItem(DATA_KEY) || '{"posts":[],"projects":[],"photos":[]}'); }
+function saveData(d) { localStorage.setItem(DATA_KEY, JSON.stringify(d)); }
+
+function openAdmin() {
+  document.getElementById('adminOverlay').style.display = 'block';
+  document.getElementById('adminLogin').style.display = 'flex';
+  document.getElementById('adminDash').style.display = 'none';
+  document.getElementById('adminError').style.display = 'none';
+  document.getElementById('adminPass').value = '';
+  setTimeout(() => document.getElementById('adminPass').focus(), 100);
+}
+
+function closeAdmin() {
+  document.getElementById('adminOverlay').style.display = 'none';
+}
+
+function checkAdmin() {
+  const val = document.getElementById('adminPass').value;
+  if (val === getPass()) {
+    document.getElementById('adminLogin').style.display = 'none';
+    document.getElementById('adminDash').style.display = 'block';
+    renderAdmin();
+  } else {
+    document.getElementById('adminError').style.display = 'block';
+    document.getElementById('adminPass').value = '';
+    document.getElementById('adminPass').focus();
+  }
+}
+
+function showTab(name, btn) {
+  document.querySelectorAll('.admin-tab-content').forEach(t => t.style.display = 'none');
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).style.display = 'block';
+  btn.classList.add('active');
+}
+
+function renderAdmin() {
+  renderPosts();
+  renderProjects();
+  renderPhotos();
+}
+
+// BLOG
+function savePost() {
+  const title = document.getElementById('postTitle').value.trim();
+  const tag = document.getElementById('postTag').value.trim();
+  const excerpt = document.getElementById('postExcerpt').value.trim();
+  const body = document.getElementById('postBody').value.trim();
+  if (!title || !body) return;
+  const d = getData();
+  d.posts.unshift({ id: Date.now(), title, tag, excerpt, body, date: new Date().toLocaleDateString('en-GB', {year:'numeric',month:'long',day:'numeric'}) });
+  saveData(d);
+  renderPosts();
+  // Add to visible notes section
+  renderPublicPosts();
+  document.getElementById('postMsg').style.display = 'block';
+  setTimeout(() => document.getElementById('postMsg').style.display = 'none', 3000);
+}
+
+function clearPost() {
+  ['postTitle','postTag','postExcerpt','postBody'].forEach(id => document.getElementById(id).value = '');
+}
+
+function deletePost(id) {
+  const d = getData();
+  d.posts = d.posts.filter(p => p.id !== id);
+  saveData(d);
+  renderPosts();
+  renderPublicPosts();
+}
+
+function renderPosts() {
+  const d = getData();
+  const list = document.getElementById('postList');
+  const noMsg = document.getElementById('noPostsMsg');
+  if (d.posts.length === 0) { list.innerHTML = ''; noMsg.style.display = 'block'; return; }
+  noMsg.style.display = 'none';
+  list.innerHTML = d.posts.map(p => `
+    <div class="post-card">
+      <div>
+        <div class="post-card-title">${p.title}</div>
+        <div class="post-card-meta">${p.tag || ''} · ${p.date}</div>
+      </div>
+      <button class="post-card-del" onclick="deletePost(${p.id})">✕ DELETE</button>
+    </div>
+  `).join('');
+}
+
+function renderPublicPosts() {
+  const d = getData();
+  const grid = document.querySelector('.notes-grid');
+  if (!grid) return;
+  // Remove dynamic posts, keep original 3
+  document.querySelectorAll('.dynamic-note').forEach(el => el.remove());
+  d.posts.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'note-card reveal dynamic-note';
+    card.innerHTML = `
+      <div class="note-tag">${p.tag || 'Note'}</div>
+      <div class="note-title">${p.title}</div>
+      <div class="note-excerpt">${p.excerpt || p.body.substring(0, 180) + '...'}</div>
+      <div class="note-date">${p.date}</div>
+    `;
+    grid.prepend(card);
+  });
+}
+
+// PROJECTS
+function saveProject() {
+  const title = document.getElementById('projTitle').value.trim();
+  const desc = document.getElementById('projDesc').value.trim();
+  if (!title || !desc) return;
+  const d = getData();
+  d.projects.push({
+    id: Date.now(),
+    title,
+    year: document.getElementById('projYear').value.trim(),
+    link: document.getElementById('projLink').value.trim(),
+    icon: document.getElementById('projIcon').value.trim() || '📌',
+    desc
+  });
+  saveData(d);
+  renderProjects();
+  renderPublicProjects();
+  document.getElementById('projMsg').style.display = 'block';
+  setTimeout(() => document.getElementById('projMsg').style.display = 'none', 3000);
+  ['projTitle','projYear','projLink','projIcon','projDesc'].forEach(id => document.getElementById(id).value = '');
+}
+
+function deleteProject(id) {
+  const d = getData();
+  d.projects = d.projects.filter(p => p.id !== id);
+  saveData(d);
+  renderProjects();
+  renderPublicProjects();
+}
+
+function renderProjects() {
+  const d = getData();
+  const list = document.getElementById('projectList');
+  list.innerHTML = d.projects.length === 0
+    ? '<div style="font-size:12px;color:var(--text2);padding:16px 0;">No custom projects yet.</div>'
+    : d.projects.map(p => `
+        <div class="post-card">
+          <div>
+            <div class="post-card-title">${p.icon} ${p.title}</div>
+            <div class="post-card-meta">${p.year || ''}</div>
+          </div>
+          <button class="post-card-del" onclick="deleteProject(${p.id})">✕</button>
+        </div>
+      `).join('');
+}
+
+function renderPublicProjects() {
+  const d = getData();
+  const grid = document.querySelector('.projects-grid');
+  if (!grid) return;
+  document.querySelectorAll('.dynamic-project').forEach(el => el.remove());
+  d.projects.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'project-card reveal dynamic-project';
+    card.innerHTML = `
+      <div class="project-icon">${p.icon}</div>
+      <div class="project-title">${p.title}</div>
+      <div class="project-desc">${p.desc}</div>
+      <div class="project-meta">
+        <span class="project-year">${p.year || ''}</span>
+        ${p.link ? `<a href="${p.link}" target="_blank" class="project-link">View →</a>` : ''}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// PHOTOS
+function handlePhotoUpload(files) {
+  Array.from(files).forEach(file => {
+    if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const d = getData();
+      d.photos.push({ id: Date.now() + Math.random(), src: e.target.result, name: file.name });
+      saveData(d);
+      renderPhotos();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function handleDrop(event) {
+  event.preventDefault();
+  document.getElementById('dropZone').style.borderColor = 'rgba(0,212,170,0.3)';
+  handlePhotoUpload(event.dataTransfer.files);
+}
+
+function deletePhoto(id) {
+  const d = getData();
+  d.photos = d.photos.filter(p => p.id !== id);
+  saveData(d);
+  renderPhotos();
+}
+
+function renderPhotos() {
+  const d = getData();
+  const gallery = document.getElementById('photoGallery');
+  const noMsg = document.getElementById('noPhotosMsg');
+  if (d.photos.length === 0) { gallery.innerHTML = ''; noMsg.style.display = 'block'; return; }
+  noMsg.style.display = 'none';
+  gallery.innerHTML = d.photos.map(p => `
+    <div class="photo-wrap">
+      <img src="${p.src}" class="photo-thumb" title="${p.name}">
+      <button onclick="deletePhoto(${p.id})">✕</button>
+    </div>
+  `).join('');
+}
+
+// PASSWORD
+function changePassword() {
+  const p1 = document.getElementById('newPass1').value;
+  const p2 = document.getElementById('newPass2').value;
+  const msg = document.getElementById('passMsg');
+  if (!p1 || p1.length < 8) {
+    msg.style.color = 'var(--red)'; msg.textContent = '// error: password must be 8+ characters'; msg.style.display = 'block'; return;
+  }
+  if (p1 !== p2) {
+    msg.style.color = 'var(--red)'; msg.textContent = '// error: passwords do not match'; msg.style.display = 'block'; return;
+  }
+  localStorage.setItem(ADMIN_KEY, p1);
+  msg.style.color = 'var(--teal)'; msg.textContent = '✓ Password updated successfully';
+  msg.style.display = 'block';
+  document.getElementById('newPass1').value = '';
+  document.getElementById('newPass2').value = '';
+}
+
+// EXPORT
+function exportData() {
+  const d = getData();
+  const blob = new Blob([JSON.stringify(d, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'yhn_content_backup.json';
+  a.click();
+}
+
+// Load dynamic content on page init
+window.addEventListener('load', () => {
+  renderPublicPosts();
+  renderPublicProjects();
+});
+
+// Close admin on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeAdmin();
+});
+
+// ── GITHUB CONFIG ──────────────────────────────────────────────────────────
+async function ghGet() {
+  const r = await fetch('/api/github-data');
+  return await r.json();
+}
+
+async function ghSet(data, sha) {
+  const r = await fetch('/api/github-data', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ data, sha })
+  });
+  const j = await r.json();
+  return j.ok;
+}
+
+// ── PROJECT TAB SWITCHING ──────────────────────────────────────────────────
+function switchProjTab(tab, btn) {
+  document.querySelectorAll('.proj-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.proj-tab-content').forEach(c => c.style.display = 'none');
+  btn.classList.add('active');
+  document.getElementById('proj-' + tab).style.display = 'block';
+}
+
+// ── LOAD PROJECTS FROM GITHUB ──────────────────────────────────────────────
+async function loadProjects() {
+  try {
+    const { data } = await ghGet();
+    const soloGrid = document.getElementById('grid-solo');
+    const emptyMsg = document.getElementById('solo-empty');
+
+    const soloProjects = data.projects_solo || [];
+
+    if (soloProjects.length === 0) {
+      if (emptyMsg) emptyMsg.style.display = 'block';
+      return;
+    }
+
+    if (emptyMsg) emptyMsg.style.display = 'none';
+
+    // Remove existing dynamic cards
+    soloGrid.querySelectorAll('.dynamic-proj').forEach(el => el.remove());
+
+    soloProjects.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'project-card reveal dynamic-proj';
+      card.innerHTML = `
+        <div class="project-icon">${p.icon || '📌'}</div>
+        <div class="project-title">${p.title}</div>
+        <div class="project-desc">${p.desc}</div>
+        <div class="project-meta">
+          <span class="project-year">${p.year || ''}</span>
+          ${p.link ? `<a href="${p.link}" target="_blank" class="project-link">View →</a>` : ''}
+        </div>`;
+      soloGrid.appendChild(card);
+      // Trigger reveal animation
+      setTimeout(() => card.classList.add('visible'), 100);
+    });
+  } catch(e) {
+    console.warn('Could not load projects from GitHub:', e);
+  }
+}
+
+// ── SAVE PROJECT TO GITHUB ─────────────────────────────────────────────────
+async function saveProjectGH() {
+  const title = document.getElementById('projTitle').value.trim();
+  const desc  = document.getElementById('projDesc').value.trim();
+  const msg   = document.getElementById('projMsg');
+
+  if (!title || !desc) {
+    msg.style.color = 'var(--red)';
+    msg.textContent = '// error: title and description required';
+    msg.style.display = 'block';
+    return;
+  }
+
+  msg.style.color = 'var(--text2)';
+  msg.textContent = '// saving to GitHub...';
+  msg.style.display = 'block';
+
+  try {
+    const { data, sha } = await ghGet();
+    const type = document.getElementById('projType').value;
+
+    const project = {
+      id: Date.now(),
+      title,
+      desc,
+      year : document.getElementById('projYear').value.trim(),
+      link : document.getElementById('projLink').value.trim(),
+      icon : document.getElementById('projIcon').value.trim() || '📌',
+      type
+    };
+
+    if (type === 'solo') {
+      data.projects_solo = data.projects_solo || [];
+      data.projects_solo.unshift(project);
+    } else {
+      data.projects_collab = data.projects_collab || [];
+      data.projects_collab.unshift(project);
+    }
+
+    const ok = await ghSet(data, sha);
+
+    if (ok) {
+      msg.style.color = 'var(--teal)';
+      msg.textContent = '✓ Saved to GitHub successfully!';
+      ['projTitle','projYear','projLink','projIcon','projDesc'].forEach(id => document.getElementById(id).value = '');
+      renderAdminProjects(data);
+      loadProjects(); // Refresh public grid
+    } else {
+      throw new Error('GitHub API returned error');
+    }
+  } catch(e) {
+    msg.style.color = 'var(--red)';
+    msg.textContent = '// error: ' + e.message;
+  }
+}
+
+// ── DELETE PROJECT FROM GITHUB ─────────────────────────────────────────────
+async function deleteProjectGH(id, type) {
+  if (!confirm('Delete this project?')) return;
+  try {
+    const { data, sha } = await ghGet();
+    const key = type === 'solo' ? 'projects_solo' : 'projects_collab';
+    data[key] = (data[key] || []).filter(p => p.id !== id);
+    await ghSet(data, sha);
+    renderAdminProjects(data);
+    loadProjects();
+  } catch(e) {
+    alert('Delete failed: ' + e.message);
+  }
+}
+
+// ── RENDER ADMIN PROJECT LIST ──────────────────────────────────────────────
+async function renderAdminProjects(data) {
+  if (!data) {
+    try { const result = await ghGet(); data = result.data; } catch(e) { return; }
+  }
+  const list = document.getElementById('projectList');
+  const all = [
+    ...(data.projects_solo || []).map(p => ({...p, type:'solo'})),
+    ...(data.projects_collab || []).map(p => ({...p, type:'collab'}))
+  ];
+  if (all.length === 0) {
+    list.innerHTML = '<div style="font-size:12px;color:var(--text2);padding:16px 0;">No projects saved yet.</div>';
+    return;
+  }
+  list.innerHTML = all.map(p => `
+    <div class="post-card">
+      <div>
+        <div class="post-card-title">${p.icon || ''} ${p.title}</div>
+        <div class="post-card-meta">${p.type === 'solo' ? '[Solo]' : '[Collab]'} · ${p.year || ''}</div>
+      </div>
+      <button class="post-card-del" onclick="deleteProjectGH(${p.id},'${p.type}')">✕</button>
+    </div>`).join('');
+}
+
+// ── OVERRIDE renderAdmin TO INCLUDE PROJECTS ──────────────────────────────
+const _origRenderAdmin = typeof renderAdmin === 'function' ? renderAdmin : null;
+function renderAdmin() {
+  if (_origRenderAdmin) _origRenderAdmin();
+  renderAdminProjects(null);
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  loadProjects();
+  renderPublicPosts();
+  renderPublicProjects();
+});
+
+</script>
+</body>
+</html>
